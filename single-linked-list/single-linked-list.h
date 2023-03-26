@@ -261,16 +261,13 @@ public:
     Iterator EraseAfter(ConstIterator pos) noexcept {
         assert(pos.node_ != nullptr);
         Node* node = pos.node_;
-        Node* after_item = node->next_node->next_node;
-        delete node->next_node;
-        node->next_node = after_item;
+        delete std::exchange(node->next_node, node->next_node->next_node);
         --size_;
         return Iterator(node->next_node);
     }
 
 private:
     // Фиктивный узел, используется для вставки "перед первым элементом"
-    //Node* head_ = nullptr;
     Node head_;
     size_t size_ = 0;
 };
