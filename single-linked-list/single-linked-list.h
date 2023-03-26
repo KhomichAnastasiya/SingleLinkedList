@@ -61,18 +61,6 @@ class SingleLinkedList {
         // попросим компилятор сгенерировать его за нас
         BasicIterator& operator=(const BasicIterator& rhs) = default;
 
-        // Оператор сравнения итераторов (в роли второго аргумента выступает константный итератор)
-        // Два итератора равны, если они ссылаются на один и тот же элемент списка либо на end()
-        /* [[nodiscard]] bool operator==(const BasicIterator<const Type>& rhs) const noexcept {
-            return this->node_ == rhs.node_;
-        }
-
-        // Оператор проверки итераторов на неравенство
-        // Противоположен ==
-        [[nodiscard]] bool operator!=(const BasicIterator<const Type>& rhs) const noexcept {
-            return !(this->node_ == rhs.node_);
-        }*/
-
         // Оператор сравнения итераторов (в роли второго аргумента итератор)
         // Два итератора равны, если они ссылаются на один и тот же элемент списка либо на end()
         template <typename Type>
@@ -137,12 +125,10 @@ public:
     }
 
     SingleLinkedList(const SingleLinkedList& other) {
-        //SingleLinkedList temp;
-        auto before = other.before_begin();
+        auto before = this->before_begin();
         for (const auto& item : other) {
-            before = other.InsertAfter(before, item);
+            before = this->InsertAfter(before, item);
         }
-        //swap(temp);
     }
 
     ~SingleLinkedList() {
